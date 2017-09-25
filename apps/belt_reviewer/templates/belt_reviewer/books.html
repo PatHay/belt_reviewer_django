@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Books Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+        #container{
+            height: 100%;
+            width: 100%;
+        }
+        #top{
+            display: flex;
+            border: solid 5px black;
+        }
+        #who_logged_in{
+            display: inline-block;
+            order: 1;
+            flex-grow: 6;
+        }
+        #body{
+            flex-direction: row;
+            display: flex;
+            border: 5px solid black;
+        }
+        #recent_reviews{
+            order: 1;
+            flex-grow: 3;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        #other_reviews{
+            order: 2;
+            flex-grow: 0;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        #scroll_box{
+            border: 5px solid black;
+            display: inline-block;
+            height: 125px;
+            overflow: scroll;
+        }
+        a{
+            order: 2;
+            flex-grow: .25;
+        }
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <div id="top">
+                <h2 id="who_logged_in">Welcome, {{ login }}!</h2>
+                <a href="/add_book">Add Book and Review</a>
+                <a href="/logout">Logout</a>
+            </div>
+            <div id="body">
+                <div id="recent_reviews">
+                    <h3>Recent Book Reviews</h3>
+                {% for review in reviews %}
+                    <a href="/books/{{ review.reviewed_book.id }}">{{ review.reviewed_book.title }}</a>
+                    <p>Rating: {{ review.rating }}</p>
+                    <p><a href="/users/{{ review.reviewer.id }}">{{ review.reviewer.alias }}</a> says: {{ review.written_review }}</p>
+                    <p>{{ review.created_at }}</p>
+                    <hr>
+                {% endfor %}
+                </div>
+                <div id="other_reviews">
+                    <h3>Other Books with Reviews:</h3>
+                    <div id="scroll_box">
+                        {% for book in books %}
+                            <p><a href="/books/{{ book.id }}">{{ book.title }}</a></p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

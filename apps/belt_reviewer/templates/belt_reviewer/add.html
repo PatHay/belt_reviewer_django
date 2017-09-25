@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add Book and Review</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+        #container{
+            height: 100%;
+            width: 100%;
+        }
+        #top{
+            text-align: right;
+            display: flex;
+            border: solid 5px black;
+            flex-direction: row-reverse;
+        }
+        #who_logged_in{
+            display: inline-block;
+            order: 1;
+            flex-grow: 6;
+        }
+        #body{
+            flex-direction: column;
+            display: flex;
+            border: 5px solid black;
+        }
+        h2{
+            order: 1;
+            flex-grow: 2;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        #new_book{
+            order: 1;
+            flex-grow: 2;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        a{
+            order: 1;
+            flex-grow: .1;
+        }
+        .fieldWrapper{
+            vertical-align: top;
+        }
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <div id="top">
+                <a href="/logout">Logout</a>
+                <a href="/books">Home</a>
+            </div>
+            <div id="body">
+                <h2>Add a New Book Title and a Review</h2>
+                    <div id="new_book">
+                        <form action="/add" method="post">
+                            {% csrf_token %}
+                            <ul style='list-style: none'>
+                                <div class="fieldWrapper">
+                                    {{ form.title.errors }}
+                                    {{ form.title.label_tag }}
+                                    {{ form.title }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    <h4>Author</h4>
+                                    {{ form.author.errors }}
+                                    {{ form.author.label_tag }}
+                                    {{ form.author }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.new_author.errors }}
+                                    {{ form.new_author.label_tag }}
+                                    {{ form.new_author }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.review.errors }}
+                                    {{ form.review.label_tag }}
+                                    {{ form.review }}
+                                </div>
+                                <div class="fieldWrapper">
+                                    {{ form.rating.errors }}
+                                    {{ form.rating.label_tag }}
+                                    {{ form.rating }}
+                                </div>
+                            <input type="submit" value="Add Book and Review">
+                            </ul>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </body>
+</html>

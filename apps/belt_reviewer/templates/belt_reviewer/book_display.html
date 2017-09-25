@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add Book and Review</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+        #container{
+            height: 100%;
+            width: 100%;
+        }
+        #top{
+            text-align: right;
+            display: flex;
+            border: solid 5px black;
+            flex-direction: row-reverse;
+        }
+        #who_logged_in{
+            display: inline-block;
+            order: 1;
+            flex-grow: 6;
+        }
+        #top2{
+            border: 5px solid black;
+            text-align: center;
+        }
+        #body{
+            flex-direction: row;
+            display: flex;
+            border: 5px solid black;
+        }
+        #reviews{
+            order: 1;
+            flex-grow: 3;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        #add_review{
+            order: 2;
+            flex-grow: .5;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        a{
+            order: 2;
+            flex-grow: .25;
+        }
+        #title{
+            display: block;
+            font-style: italic;
+        }
+        #home{
+            flex-grow: .1;
+        }
+        #logout{
+            flex-grow: .1;
+        }
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <div id="top">
+                <a href="/logout" id="logout">Logout</a>
+                <a href="/books" id="home">Home</a>
+            </div>
+            <div id="top2">
+                <h1 id="title">{{ book_title }}</h1>
+                <h3 id="author">By: {{ author }}</h3>
+            </div>
+            <div id="body">
+                <div id="reviews">
+                    <h2>Reviews:</h2>
+                    <hr>
+                    {% for review in reviews %}
+                        <p>Rating: {{ review.rating }}</p>
+                        <p><a href="/users/{{ review.reviewer.id }}">{{ review.reviewer.alias }}</a> says: {{ review.written_review }}</p>
+                        <p>{{ review.created_at }}</p>
+                        {% if logged_in is review.reviewer.id %}
+                            <a href = "{{ review.reviewed_book.id }}/delete/{{ review.id }}">Delete this review</a>
+                        {% endif %}
+                        <hr>
+                    {% endfor %}
+                </div>
+                <div id="add_review">
+                    <h2>Add a Review:</h2>
+                    <form action="{{ number }}/new_review" method="post">
+                        {% csrf_token %}
+                        <ul style='list-style: none'>
+                            <div class="fieldWrapper">
+                                {{ form.review.errors }}
+                                {{ form.review.label_tag }}
+                                {{ form.review }}
+                            </div>
+                            <div class="fieldWrapper">
+                                {{ form.rating.errors }}
+                                {{ form.rating.label_tag }}
+                                {{ form.rating }}
+                            </div>
+                        <input type="submit" value="Add Review">
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

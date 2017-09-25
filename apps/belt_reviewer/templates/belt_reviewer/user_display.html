@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add Book and Review</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+        #container{
+            height: 100%;
+            width: 100%;
+        }
+        #top{
+            text-align: right;
+            display: flex;
+            border: solid 5px black;
+            flex-direction: row-reverse;
+        }
+        #who_logged_in{
+            display: inline-block;
+            order: 1;
+            flex-grow: 6;
+        }
+        #body1{
+            border: 5px solid black;
+        }
+        #body2{
+            flex-direction: row;
+            display: flex;
+            border: 5px solid black;
+        }
+        #reviews{
+            order: 1;
+            flex-grow: 3;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        #add_review{
+            order: 2;
+            flex-grow: .5;
+            border: 5px solid black;
+            display: inline-block;
+        }
+        a{
+            order: 2;
+            flex-grow: .25;
+        }
+        #title{
+            display: block;
+            font-style: italic;
+        }
+        #home{
+            flex-grow: .1;
+        }
+        #logout{
+            flex-grow: .05;
+        }
+        #add_book{
+            flex-grow: .05;
+        }
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <div id="top">
+                <a href="/logout" id="logout">Logout</a>
+                <a href="/add_book" id="add_book">Add Book and Review</a>
+                <a href="/books" id="home">Home</a>
+            </div>
+            <div id="body1">
+                <h1 id="title">User Alias:  {{ alias }}</h1>
+                <h3 id="author">User Name:  {{ name }}</h3>
+                <h3 id="author">Email:  {{ email }}</h3>
+                <h3 id="author">Total Reviews:  {{ total_reviews }}</h3>
+            </div>
+            <div id="body2">
+                <div id="reviews">
+                    <h2>Posted Reviews on the following books:</h2>
+                    <hr>
+                    {% for review in reviews %}
+                        <p><a href="/books/{{ review.reviewed_book.id }}">{{ review.reviewed_book.title }}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
